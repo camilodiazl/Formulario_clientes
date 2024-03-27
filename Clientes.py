@@ -6,7 +6,7 @@ class CClientes:
     def IngresarClientes(self, Nombre, Telefono, Pueblo, Financiamiento, Falla, Solucion, Tier):
             
         try:
-            sql = "insert into usuarios values (null, %s, %s, %s, %s, %s, %s, %s);"
+            sql = "INSERT INTO usuarios (Nombre, Telefono, Pueblo, Financiamiento, Falla, Solucion, Tier) VALUES (%s, %s, %s, %s, %s, %s, %s);"
             valores = (Nombre, Telefono, Pueblo, Financiamiento, Falla, Solucion, Tier)
             cone = CConexion.ConexionBaseDeDatos()
             cursor = cone.cursor()

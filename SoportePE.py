@@ -11,6 +11,7 @@ import openpyxl
 import xlwt
 import os
 
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
@@ -102,7 +103,7 @@ def Formulario():
         base = Tk()
         base.geometry("1700x700")
         base.title("Formlario Clientes")
-        base.iconbitmap("images/pe.ico")
+        
         
         # Cambiar el color de fondo de la ventana principal
         base.configure(bg='#C5E0DC')
