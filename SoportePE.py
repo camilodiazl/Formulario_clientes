@@ -194,10 +194,10 @@ def Formulario():
         comboBuscarPor.grid(row=0, column=1, sticky="w")
         
         LabelValorBusqueda = Label(groupBoxB, text="Valor:", width=7, font=("arial", 11, "bold"), bg='#9DBEBB')
-        LabelValorBusqueda.grid(row=1, column=0,padx=(0, 40))
+        LabelValorBusqueda.grid(row=1, column=0,padx=(0, 0))
 
-        TextBoxValorBusqueda = Text(groupBoxB,width=29, height=0, font=("arial",11))
-        TextBoxValorBusqueda.grid(row=1, column=1, padx=(0, 140))
+        TextBoxValorBusqueda =Entry(groupBoxB,width=29, font=("arial",11))
+        TextBoxValorBusqueda.grid(row=1, column=1,sticky="w")
 
         #Botones          
         btn_guardar = Button(groupBox, text='Guardar', command=guardarRegistros,bg='#F4E9CD',font=("arial",12))
@@ -584,7 +584,7 @@ def guardar_xlsx(file_path, datos_reporte):
         
 def buscar_cliente():
     criterio_busqueda = comboBuscarPor.get()
-    valor_busqueda = TextBoxValorBusqueda.get("1.0", "end-1c")
+    valor_busqueda = TextBoxValorBusqueda.get()
 
     if not valor_busqueda:
         messagebox.showwarning("Advertencia", "Por favor ingrese un valor para la búsqueda.")
@@ -600,7 +600,7 @@ def buscar_cliente():
             tree.insert("", "end", values=row)
             
         messagebox.showinfo("Información", "Busqueda exitosa.")    
-        TextBoxValorBusqueda.delete("1.0", "end-1c")
+        TextBoxValorBusqueda.delete(0, END)
     else:
         messagebox.showinfo("Información", "No se encontraron resultados para la búsqueda.")
     
