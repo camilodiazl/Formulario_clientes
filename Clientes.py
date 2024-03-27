@@ -22,20 +22,7 @@ class CClientes:
         except mysql.connector.Error as error:
             print("Error de ingreso de datos {}".format(error))
             
-            
-    def MostrarClientes():
-        try:
-            cone = CConexion.ConexionBaseDeDatos()
-            cursor = cone.cursor()
-            cursor.execute("SELECT * FROM usuarios;")
-            miResultado = cursor.fetchall()
-            cone.commit()
-            cone.close()
-            return miResultado
-            
-        except mysql.connector.Error as error:
-            print("Error de mostrar datos {}".format(error))
-            
+                    
     
     def ModificarClientes(self, Usuarioid, Nombre, Telefono, Pueblo, Financiamiento, Falla, Solucion, Tier):
             
@@ -89,3 +76,16 @@ class CClientes:
             print("Error al eliminar los datos {}".format(error))
             
     
+    def MostrarClientes():
+        
+        try:
+            cone = CConexion.ConexionBaseDeDatos()
+            cursor = cone.cursor()
+            cursor.execute("SELECT * FROM usuarios;")
+            miResultado = cursor.fetchall()
+            cone.commit()
+            cone.close()
+            return miResultado
+                
+        except mysql.connector.Error as error:
+            print("Error de mostrar datos {}".format(error))

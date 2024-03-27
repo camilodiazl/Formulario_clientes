@@ -1,9 +1,16 @@
 
 import tkinter as tk
-from tkinter import ttk, messagebox, END, Scrollbar, Text, Label
+from tkinter import ttk, messagebox, END, Scrollbar, Text, Label, filedialog
+
 import pyperclip
 
 import matplotlib.pyplot as plt
+
+import csv
+import openpyxl
+import xlwt
+import os
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
@@ -95,6 +102,7 @@ def Formulario():
         base = Tk()
         base.geometry("1700x700")
         base.title("Formlario Clientes")
+        base.iconbitmap("images/pe.ico")
         
         # Cambiar el color de fondo de la ventana principal
         base.configure(bg='#C5E0DC')
@@ -199,6 +207,8 @@ def Formulario():
         btn_borrar = Button(groupBox, text='Borrar', command=EliminarRegistros,bg='#F4E9CD',font=("arial",12),padx=11)
         btn_actualizar = Button(groupBox, text='Actualizar', command=ActualizarTabla,bg='#F4E9CD',font=("arial",12))
         btn_buscar = Button(groupBoxB, text='Buscar', command=buscar_cliente, bg='#F4E9CD', font=("arial", 12),padx=9)
+        btn_generar_reporte = Button(groupBoxB, text='Generar Reporte CSV', command=guardar_reporte, bg='#F4E9CD', font=("arial",12))
+
         
 
         # Mostrar los botones en la ventana
@@ -210,7 +220,7 @@ def Formulario():
         btn_actualizar.grid(row=11, column=2,pady=(5, 10))
         
         btn_buscar.grid(row=2, column=1, pady=(5, 10), padx=(0, 119))
-        
+        btn_generar_reporte.grid(row=3, column=1, pady=(5, 10))
          
         
          
@@ -507,8 +517,71 @@ def ActualizarTabla():
     
     grafica_Tier()
     messagebox.showinfo("Informacion","Tabla actualizada")
+    
 
+def obtener_datos_reporte():
+    try:
+        datos_reporte = []
 
+        # Obtener todos los elementos del TreeView
+        items = tree.get_children()
+
+        for item in items:
+            # Obtener los valores de cada fila
+            values = tree.item(item, 'values')
+            datos_reporte.append(values)
+
+        return datos_reporte
+    except Exception as e:
+        print("Error al obtener datos del reporte:", e)
+        return []
+
+def guardar_reporte():
+    try:
+        datos_reporte = obtener_datos_reporte()
+
+        if not datos_reporte:
+            messagebox.showerror("Error", "No hay datos para guardar.")
+            return
+
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".csv",
+            filetypes=[("CSV Files", "*.csv"), ("Excel Files", "*.xlsx"), ("Todos los archivos", "*.*")],
+            title="Guardar reporte"
+        )
+
+        if file_path:
+            file_extension = os.path.splitext(file_path)[1].lower()
+
+            if file_extension in ['.csv', '.xlsx']:
+                if file_extension == '.csv':
+                    guardar_csv(file_path, datos_reporte)
+                elif file_extension == '.xlsx':
+                    guardar_xlsx(file_path, datos_reporte)
+            else:
+                messagebox.showerror("Error", "Formato de archivo no válido. Por favor, seleccione un formato compatible (.csv o .xlsx)")
+        else:
+            print("Guardado cancelado por el usuario")
+    except Exception as e:
+        print("Error al guardar el reporte:", e)
+
+def guardar_csv(file_path, datos_reporte):
+    with open(file_path, "w", newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["ID", "NOMBRE", "TELEFONO", "PUEBLO", "FINANCIAMIENTO", "FALLA DEL CLIENTE", "SOPORTE BRINDADO", "TIER 1"])
+        writer.writerows(datos_reporte)
+        messagebox.showinfo("Informacion","Reporte CSV guardado correctamente")
+
+def guardar_xlsx(file_path, datos_reporte):
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+    sheet.append(["ID", "NOMBRE", "TELEFONO", "PUEBLO", "FINANCIAMIENTO", "FALLA DEL CLIENTE", "SOPORTE BRINDADO", "TIER 1"])
+    for row in datos_reporte:
+        sheet.append(row)
+    workbook.save(file_path)
+    messagebox.showinfo("Informacion","Reporte EXCEL guardado correctamente")
+        
+        
 def buscar_cliente():
     criterio_busqueda = comboBuscarPor.get()
     valor_busqueda = TextBoxValorBusqueda.get("1.0", "end-1c")
