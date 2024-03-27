@@ -183,7 +183,7 @@ def Formulario():
         comboN.grid(row=7,column=1, sticky="w")
         
         
-        groupBoxB = LabelFrame(base, text="BUSCAR REGISTRO", padx=82,pady=1,font=('arial',10,'bold'), bg='#92BEBB', labelanchor='n')
+        groupBoxB = LabelFrame(base, text="BUSCAR REGISTRO", padx=13,pady=1,font=('arial',10,'bold'), bg='#92BEBB', labelanchor='n')
         groupBoxB.grid(row=1,column=0,padx=10,pady=(0,120))
          
          
@@ -197,9 +197,9 @@ def Formulario():
         LabelValorBusqueda.grid(row=1, column=0,padx=(0, 40))
 
         TextBoxValorBusqueda = Text(groupBoxB,width=29, height=0, font=("arial",11))
-        TextBoxValorBusqueda.grid(row=1, column=1)
+        TextBoxValorBusqueda.grid(row=1, column=1, padx=(0, 140))
 
-                  
+        #Botones          
         btn_guardar = Button(groupBox, text='Guardar', command=guardarRegistros,bg='#F4E9CD',font=("arial",12))
         btn_modificar = Button(groupBox, text='Modificar',command=ModificarRegistros,bg='#F4E9CD',font=("arial",12))
         btn_limpiar = Button(groupBox, text='Limpiar', command=limpiar_campos,bg='#F4E9CD',font=("arial",12),padx=9)
@@ -207,7 +207,7 @@ def Formulario():
         btn_borrar = Button(groupBox, text='Borrar', command=EliminarRegistros,bg='#F4E9CD',font=("arial",12),padx=11)
         btn_actualizar = Button(groupBox, text='Actualizar', command=ActualizarTabla,bg='#F4E9CD',font=("arial",12))
         btn_buscar = Button(groupBoxB, text='Buscar', command=buscar_cliente, bg='#F4E9CD', font=("arial", 12),padx=9)
-        btn_generar_reporte = Button(groupBoxB, text='Generar Reporte CSV', command=guardar_reporte, bg='#F4E9CD', font=("arial",12))
+        btn_generar_reporte = Button(groupBoxB, text='Generar Reporte', command=guardar_reporte, bg='#F4E9CD', font=("arial",12))
 
         
 
@@ -220,7 +220,7 @@ def Formulario():
         btn_actualizar.grid(row=11, column=2,pady=(5, 10))
         
         btn_buscar.grid(row=2, column=1, pady=(5, 10), padx=(0, 119))
-        btn_generar_reporte.grid(row=3, column=1, pady=(5, 10))
+        btn_generar_reporte.grid(row=2, column=1, pady=(5, 10),padx=(240, 0))
          
         
          
